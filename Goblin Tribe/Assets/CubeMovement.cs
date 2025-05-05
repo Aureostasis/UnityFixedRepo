@@ -11,6 +11,10 @@ public class CubeMovement : MonoBehaviour
     public GameObject player;
     public GameObject aim;
     private Rigidbody2D playerRb;
+    private bool mvmtBtnWDown = false;
+    private bool mvmtBtnADown = false;
+    private bool mvmtBtnSDown = false;
+    private bool mvmtBtnDDown = false;
     Vector2 movement;
 
 
@@ -51,17 +55,42 @@ public class CubeMovement : MonoBehaviour
     {
         rollCD -= 1;
 
-        if (Input.GetKey(KeyCode.W)) {
-            rb.AddForce(new Vector2(0, speed * Time.deltaTime));  
+        if (mvmtBtnSDown && (mvmtBtnDDown || mvmtBtnADown)) {
+            speed = 1750;
+        }
+        else
+        {
+            speed = 3500f;
+        }
+
+        if (mvmtBtnWDown && (mvmtBtnDDown || mvmtBtnADown))
+        {
+            speed = 1750;
+        }
+        else
+        {
+            speed = 3500f;
+        }
+
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            print("LingearVelocity: " + rb.linearVelocity);
+            rb.AddForce(new Vector2(0, speed * Time.deltaTime));
+            mvmtBtnWDown = true; 
+            
         }
         if (Input.GetKey(KeyCode.S)){
             rb.AddForce(new Vector2(0, -speed * Time.deltaTime));
+            mvmtBtnSDown = true;
         }
         if (Input.GetKey(KeyCode.A)){
-            rb.AddForce(new Vector2(-speed * Time.deltaTime, 0)); 
+            rb.AddForce(new Vector2(-speed * Time.deltaTime, 0));
+            mvmtBtnADown = true;
         }
         if (Input.GetKey(KeyCode.D)){
             rb.AddForce(new Vector2(speed * Time.deltaTime, 0));
+            mvmtBtnDDown = true;
         }
     }
     public void TakeDmg()

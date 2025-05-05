@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     private int currentHealth;
+    public GameObject sManager;
 
     void Start()
     {
@@ -24,8 +26,11 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player died!");
+        sManager = GameObject.FindGameObjectWithTag("SceneManager");
         // You can add death animation, respawn logic, or game over screen here
         Destroy(gameObject); // Optional: destroy the player on death
+        sceneManagerScript sn = sManager.GetComponent<sceneManagerScript>();
+        sn.LoadSceneByIndex(0);
     }
 
     // Optional: Visualize current health in the Inspector
