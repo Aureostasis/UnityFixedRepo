@@ -55,43 +55,32 @@ public class CubeMovement : MonoBehaviour
     {
         rollCD -= 1;
 
-        if (mvmtBtnSDown && (mvmtBtnDDown || mvmtBtnADown)) {
-            speed = 1750;
-        }
-        else
-        {
-            speed = 3500f;
-        }
-
-        if (mvmtBtnWDown && (mvmtBtnDDown || mvmtBtnADown))
-        {
-            speed = 1750;
-        }
-        else
-        {
-            speed = 3500f;
-        }
-
+        Vector2 force = Vector2.zero;
 
         if (Input.GetKey(KeyCode.W))
         {
-            print("LingearVelocity: " + rb.linearVelocity);
-            rb.AddForce(new Vector2(0, speed * Time.deltaTime));
-            mvmtBtnWDown = true; 
-            
+            force += Vector2.up;
         }
-        if (Input.GetKey(KeyCode.S)){
-            rb.AddForce(new Vector2(0, -speed * Time.deltaTime));
-            mvmtBtnSDown = true;
+        if (Input.GetKey(KeyCode.S))
+        {
+            force += Vector2.down;
         }
-        if (Input.GetKey(KeyCode.A)){
-            rb.AddForce(new Vector2(-speed * Time.deltaTime, 0));
-            mvmtBtnADown = true;
+        if (Input.GetKey(KeyCode.A))
+        {
+            force += Vector2.left;
         }
-        if (Input.GetKey(KeyCode.D)){
-            rb.AddForce(new Vector2(speed * Time.deltaTime, 0));
-            mvmtBtnDDown = true;
+        if (Input.GetKey(KeyCode.D))
+        {
+            force += Vector2.right;
         }
+
+        // Normalize the force vector if its magnitude is greater than 1
+        if (force.magnitude > 1)
+        {
+            force = force.normalized;
+        }
+
+        rb.AddForce(force * speed * Time.deltaTime);
     }
     public void TakeDmg()
     {   
