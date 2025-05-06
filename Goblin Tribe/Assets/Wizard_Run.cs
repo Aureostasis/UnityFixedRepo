@@ -23,7 +23,6 @@ public class Wizard_Run : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // If the player no longer exists (e.g., they died), go to Idle
         if (player == null)
         {
             boss.canMove = false;
@@ -31,18 +30,23 @@ public class Wizard_Run : StateMachineBehaviour
             return;
         }
 
-        // If player is within attack range and cooldown is done, attack
+        // Check distance and attack if in range and cooldown allows
         if (Vector2.Distance(player.position, rb.position) <= attackRange &&
             Time.time >= boss.lastAttackTime + boss.attackCooldown)
         {
             animator.SetTrigger("Attack1");
             boss.lastAttackTime = Time.time;
         }
+
+        // No damage or TakeHit logic here anymore
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        // Only reset triggers that this state sets. Do NOT reset TakeHit
         animator.ResetTrigger("Attack1");
-        animator.ResetTrigger("IdleTrigger"); 
+        animator.ResetTrigger("IdleTrigger");
+
+        // ?? DO NOT include: animator.ResetTrigger("TakeHit");
     }
 }
