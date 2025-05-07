@@ -15,6 +15,7 @@ public class CubeMovement : MonoBehaviour
     Vector2 movement;
     public GameObject parry;
     public int parryCD = 0;
+    public int parrybuttonCD = 0;
     public bool isParry;
     UnityEvent giveInvuln;
 
@@ -58,23 +59,28 @@ public class CubeMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if (parryCD <= 0)
+            if (parrybuttonCD <= 0)
             {
                 animator.SetTrigger("startParry");
                 animator.SetBool("isParrying", true);
                 isParry = true;
                 parry.SetActive(true);
-                Debug.Log("Parry Stance Triggered");
+                Debug.Log("Parry Pressed");
                 parryCD = 50;
-                
+                parrybuttonCD = 50;
+
+
             }
         }
     }
     void FixedUpdate()
     {
         if (rollCD > 0) { 
-            rollCD -= 1;
-            
+            rollCD -= 1; 
+        }
+        if (parrybuttonCD > 0)
+        {
+            parrybuttonCD -= 1;
         }
         if (parryCD > 0) {
             parryCD -= 1;

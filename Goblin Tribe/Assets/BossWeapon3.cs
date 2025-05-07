@@ -6,6 +6,7 @@ public class BossWeapon3 : MonoBehaviour
     public Vector3 attackOffset;
     public Vector2 hitboxSize = new Vector2(1.5f, 2f); // Unique shape
     public LayerMask attackMask;
+    public CubeMovement goblinScript;
 
     // Renamed to avoid animation event conflicts
     public void AttackWeapon3()
@@ -21,17 +22,21 @@ public class BossWeapon3 : MonoBehaviour
 
         Collider2D colInfo = Physics2D.OverlapBox(pos, hitboxSize, 0f, attackMask);
 
-        if (colInfo != null)
+        if (colInfo != null && goblinScript.isParry == false)
         {
             PlayerHealth playerHealth = colInfo.GetComponentInParent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(attackDamage);
+                Debug.Log("Boss a1 hit");
             }
             else
             {
                 Debug.LogWarning("Hit object has no PlayerHealth component: " + colInfo.name);
             }
+        }
+        else if (colInfo != null && goblinScript.isParry == true) {
+            goblinScript.parrybuttonCD = 0;
         }
     }
 

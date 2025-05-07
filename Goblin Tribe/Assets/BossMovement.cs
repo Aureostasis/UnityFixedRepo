@@ -18,6 +18,8 @@ public class BossMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
 
+    public GameObject sManager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -64,6 +66,7 @@ public class BossMovement : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+
         }
     }
 
@@ -98,6 +101,10 @@ public class BossMovement : MonoBehaviour
         }
 
         this.enabled = false;
+
+        sManager = GameObject.FindGameObjectWithTag("SceneManager");
+        sceneManagerScript sn = sManager.GetComponent<sceneManagerScript>();
+        sn.LoadSceneByIndex(2);
     }
 
 

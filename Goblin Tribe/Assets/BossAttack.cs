@@ -8,16 +8,6 @@ public class BossWeapon : MonoBehaviour
     public LayerMask attackMask;
     public CubeMovement goblinScript;
 
-    public void Start()
-    {
-
-    }
-
-    public void Update()
-    {
-
-    }
-
     public void Attack2()
     {
         Vector3 pos = transform.position;
@@ -35,11 +25,16 @@ public class BossWeapon : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(attackDamage);
+                Debug.Log("Boss a3 hit");
             }
             else
             {
                 Debug.LogWarning("Hit object has no PlayerHealth component: " + colInfo.name);
             }
+        }
+        else if (colInfo != null && goblinScript.isParry == true)
+        {
+            goblinScript.parrybuttonCD = 0;
         }
     }
 
