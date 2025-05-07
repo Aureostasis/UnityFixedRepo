@@ -67,11 +67,6 @@ public class BossMovement : MonoBehaviour
         }
     }
 
-
-
-
-
-
     void Die()
     {
         if (isDead) return;

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CubeMovement : MonoBehaviour
 {
@@ -11,11 +12,12 @@ public class CubeMovement : MonoBehaviour
     public GameObject player;
     public GameObject aim;
     private Rigidbody2D playerRb;
-    private bool mvmtBtnWDown = false;
-    private bool mvmtBtnADown = false;
-    private bool mvmtBtnSDown = false;
-    private bool mvmtBtnDDown = false;
     Vector2 movement;
+    public GameObject parry;
+    public int parryCD = 0;
+    public bool isParry;
+    UnityEvent giveInvuln;
+
 
 
     // Animation variables
@@ -25,6 +27,9 @@ public class CubeMovement : MonoBehaviour
     void Start()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+        if (giveInvuln == null)
+            giveInvuln = new UnityEvent();
     }
 
     void Update()
@@ -50,26 +55,54 @@ public class CubeMovement : MonoBehaviour
                 rollCD = 100;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (parryCD <= 0)
+            {
+                animator.SetTrigger("startParry");
+                animator.SetBool("isParrying", true);
+                isParry = true;
+                parry.SetActive(true);
+                Debug.Log("Parry Stance Triggered");
+                parryCD = 50;
+                
+            }
+        }
     }
     void FixedUpdate()
     {
-        rollCD -= 1;
+        if (rollCD > 0) { 
+            rollCD -= 1;
+            
+        }
+        if (parryCD > 0) {
+            parryCD -= 1;
+            if (parryCD == 38)
+            {
+                isParry = false;
+                parry.SetActive(false);
+                animator.SetBool("isParrying", false);
+
+            }
+        }
+        
 
         Vector2 force = Vector2.zero;
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && isParry == false)
         {
             force += Vector2.up;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && isParry == false)
         {
             force += Vector2.down;
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && isParry == false)
         {
             force += Vector2.left;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && isParry == false)
         {
             force += Vector2.right;
         }
@@ -81,6 +114,8 @@ public class CubeMovement : MonoBehaviour
         }
 
         rb.AddForce(force * speed * Time.deltaTime);
+
+        
     }
     public void TakeDmg()
     {   

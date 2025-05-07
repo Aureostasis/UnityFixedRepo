@@ -6,6 +6,17 @@ public class BossWeapon : MonoBehaviour
     public Vector3 attackOffset;
     public float attackRange = 1f;
     public LayerMask attackMask;
+    public CubeMovement goblinScript;
+
+    public void Start()
+    {
+
+    }
+
+    public void Update()
+    {
+
+    }
 
     public void Attack()
     {
@@ -18,7 +29,7 @@ public class BossWeapon : MonoBehaviour
 
         Collider2D colInfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
 
-        if (colInfo != null)
+        if (colInfo != null && goblinScript.isParry == false)
         {
             PlayerHealth playerHealth = colInfo.GetComponentInParent<PlayerHealth>();
             if (playerHealth != null)

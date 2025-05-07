@@ -20,4 +20,8 @@ public class sceneManagerScript : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(indx);
     }
+
+    public void QuitGame() { 
+        Application.Quit();
+    }
 }
