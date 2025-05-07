@@ -40,7 +40,7 @@ public class BossWeapon : MonoBehaviour
         pos += transform.right * attackOffset.x * direction;
         pos += transform.up * attackOffset.y;
 
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(pos, attackRange);
     }
 }
