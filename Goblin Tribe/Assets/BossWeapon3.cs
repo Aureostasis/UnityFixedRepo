@@ -1,35 +1,27 @@
 using UnityEngine;
 
-public class BossWeapon : MonoBehaviour
+public class BossWeapon3 : MonoBehaviour
 {
-    public int attackDamage = 20;
+    public int attackDamage = 25;  // Unique strength for this weapon
     public Vector3 attackOffset;
-    public float attackRange = 1f;
+    public Vector2 hitboxSize = new Vector2(1.5f, 2f); // Unique shape
     public LayerMask attackMask;
-    public CubeMovement goblinScript;
 
-    public void Start()
-    {
-
-    }
-
-    public void Update()
-    {
-
-    }
-
-    public void Attack2()
+    // Renamed to avoid animation event conflicts
+    public void AttackWeapon3()
     {
         Vector3 pos = transform.position;
 
-        // Flip offset if boss is flipped (scale.x < 0)
+        // Flip offset based on boss facing direction
         float direction = Mathf.Sign(transform.localScale.x);
         pos += transform.right * attackOffset.x * direction;
         pos += transform.up * attackOffset.y;
 
-        Collider2D colInfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
+        Vector2 adjustedHitboxSize = new Vector2(hitboxSize.x * direction, hitboxSize.y);
 
-        if (colInfo != null && goblinScript.isParry == false)
+        Collider2D colInfo = Physics2D.OverlapBox(pos, hitboxSize, 0f, attackMask);
+
+        if (colInfo != null)
         {
             PlayerHealth playerHealth = colInfo.GetComponentInParent<PlayerHealth>();
             if (playerHealth != null)
@@ -51,7 +43,9 @@ public class BossWeapon : MonoBehaviour
         pos += transform.right * attackOffset.x * direction;
         pos += transform.up * attackOffset.y;
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(pos, attackRange);
+        Vector2 adjustedHitboxSize = new Vector2(hitboxSize.x * direction, hitboxSize.y);
+
+        Gizmos.color = Color.cyan; // Visually distinct for debugging
+        Gizmos.DrawWireCube(pos, adjustedHitboxSize);
     }
 }

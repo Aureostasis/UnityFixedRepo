@@ -1,24 +1,13 @@
 using UnityEngine;
 
-public class BossWeapon : MonoBehaviour
+public class BossWeapon2 : MonoBehaviour
 {
     public int attackDamage = 20;
     public Vector3 attackOffset;
-    public float attackRange = 1f;
+    public Vector2 hitboxSize = new Vector2(2f, 1f); // Width and height of the attack area
     public LayerMask attackMask;
-    public CubeMovement goblinScript;
 
-    public void Start()
-    {
-
-    }
-
-    public void Update()
-    {
-
-    }
-
-    public void Attack2()
+    public void Attack()
     {
         Vector3 pos = transform.position;
 
@@ -27,9 +16,12 @@ public class BossWeapon : MonoBehaviour
         pos += transform.right * attackOffset.x * direction;
         pos += transform.up * attackOffset.y;
 
-        Collider2D colInfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
+        // Flip hitbox horizontally if needed
+        Vector2 adjustedHitboxSize = new Vector2(hitboxSize.x * direction, hitboxSize.y);
 
-        if (colInfo != null && goblinScript.isParry == false)
+        Collider2D colInfo = Physics2D.OverlapBox(pos, hitboxSize, 0f, attackMask);
+
+        if (colInfo != null)
         {
             PlayerHealth playerHealth = colInfo.GetComponentInParent<PlayerHealth>();
             if (playerHealth != null)
@@ -51,7 +43,9 @@ public class BossWeapon : MonoBehaviour
         pos += transform.right * attackOffset.x * direction;
         pos += transform.up * attackOffset.y;
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(pos, attackRange);
+        Vector2 adjustedHitboxSize = new Vector2(hitboxSize.x * direction, hitboxSize.y);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(pos, adjustedHitboxSize);
     }
 }
