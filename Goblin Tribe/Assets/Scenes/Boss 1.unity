@@ -541,6 +541,7 @@ GameObject:
   - component: {fileID: 346792031}
   - component: {fileID: 346792030}
   - component: {fileID: 346792032}
+  - component: {fileID: 346792033}
   m_Layer: 0
   m_Name: Boss1
   m_TagString: Boss
@@ -732,12 +733,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 346792025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 095e3577e8e44224fa5915e0716bdc24, type: 3}
+  m_Script: {fileID: 11500000, guid: 940158b5f13fb0840a71c133c1d0e363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 0
-  attackOffset: {x: 3.5, y: 1, z: 0}
-  attackRange: 3.5
+  attackDamage: 20
+  attackOffset: {x: 5, y: 2, z: 0}
+  hitboxSize: {x: 3, y: 6}
+  attackMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &346792033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346792025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940158b5f13fb0840a71c133c1d0e363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 20
+  attackOffset: {x: 2.5, y: 0, z: 0}
+  hitboxSize: {x: 2, y: 3}
   attackMask:
     serializedVersion: 2
     m_Bits: 64
