@@ -18,7 +18,9 @@ public class BossMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
 
-    public GameObject sManager;
+    public GameObject VictoryScreenUI;
+
+    
 
     void Start()
     {
@@ -102,9 +104,9 @@ public class BossMovement : MonoBehaviour
 
         this.enabled = false;
 
-        sManager = GameObject.FindGameObjectWithTag("SceneManager");
-        sceneManagerScript sn = sManager.GetComponent<sceneManagerScript>();
-        sn.LoadSceneByIndex(2);
+        VictoryScreenUI.SetActive(true);
+
+        
     }
 
 
